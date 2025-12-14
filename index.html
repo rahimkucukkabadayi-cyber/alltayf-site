@@ -3,21 +3,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="ALLTAYF — Kelebek Etkisi Köyü, Tiny House Doğa Turizmi ve Tayflar: Tarım, Enerji, İmalat, Teknoloji." />
+  <meta name="description" content="ALLTAYF — Kelebek Etkisi Evreni. Tayflar: Farm, Build, Energy, Drill, Stone, Tech, Stay, Event." />
   <title>ALLTAYF | Kelebek Etkisi Evreni</title>
 
   <style>
     :root{
       --bg:#0b0f1a;
-      --card:#0f1630;
-      --card2:#0c1226;
+      --glass: rgba(11,15,26,.72);
       --text:#e8ecff;
       --muted:#b8c0ff;
       --line:rgba(255,255,255,.10);
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius:16px;
       --brand:#6e7cff;
       --brand2:#50e3c2;
-      --shadow: 0 20px 60px rgba(0,0,0,.45);
-      --radius: 16px;
     }
 
     *{ box-sizing:border-box; }
@@ -25,12 +24,12 @@
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+      color:var(--text);
       background:
-        radial-gradient(900px 500px at 20% 10%, rgba(110,124,255,.25), transparent 60%),
-        radial-gradient(900px 500px at 80% 20%, rgba(80,227,194,.18), transparent 60%),
+        radial-gradient(900px 520px at 18% 12%, rgba(110,124,255,.25), transparent 60%),
+        radial-gradient(900px 520px at 82% 20%, rgba(80,227,194,.18), transparent 60%),
         radial-gradient(1200px 700px at 50% 100%, rgba(110,124,255,.12), transparent 60%),
         var(--bg);
-      color:var(--text);
       line-height:1.5;
     }
 
@@ -38,20 +37,19 @@
     .container{ width:min(1120px, calc(100% - 40px)); margin:0 auto; }
 
     /* NAV */
-    .nav{
-      position:sticky; top:0; z-index:50;
+    header.nav{
+      position:sticky; top:0; z-index:60;
       backdrop-filter: blur(14px);
-      background: rgba(11,15,26,.70);
+      background: var(--glass);
       border-bottom:1px solid var(--line);
     }
     .nav-inner{
       display:flex; align-items:center; justify-content:space-between;
-      padding:14px 0;
-      gap:14px;
+      gap:14px; padding:14px 0;
     }
     .brand{
       display:flex; align-items:center; gap:12px;
-      min-width: 220px;
+      min-width: 240px;
     }
     .brand img{
       width:42px; height:42px; object-fit:contain;
@@ -60,38 +58,12 @@
       border:1px solid var(--line);
       padding:6px;
     }
-    .brand .title{
-      display:flex; flex-direction:column; gap:2px;
-      line-height:1.1;
-    }
+    .brand .title{ display:flex; flex-direction:column; gap:2px; line-height:1.1; }
     .brand .title b{ letter-spacing:.6px; }
     .brand .title small{ color:var(--muted); opacity:.9; }
 
-    .menu{
-      display:flex; align-items:center; gap:16px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-    .menu a, .menu .nav-link{
-      padding:10px 10px;
-      border-radius:12px;
-      color:var(--muted);
-      border:1px solid transparent;
-      background: transparent;
-      font: inherit;
-      cursor: pointer;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-    }
-    .menu a:hover, .menu .nav-link:hover{
-      color:var(--text);
-      border-color: var(--line);
-      background: rgba(255,255,255,.03);
-    }
-
-    .cta{
-      display:flex; gap:10px; align-items:center;
+    .nav-actions{
+      display:flex; align-items:center; gap:10px;
     }
     .btn{
       border:1px solid var(--line);
@@ -101,6 +73,7 @@
       border-radius:14px;
       display:inline-flex; align-items:center; gap:10px;
       cursor:pointer;
+      user-select:none;
     }
     .btn:hover{ background: rgba(255,255,255,.06); }
     .btn.primary{
@@ -111,807 +84,514 @@
       background: linear-gradient(135deg, rgba(110,124,255,.35), rgba(80,227,194,.18));
     }
 
-    /* DROPDOWN (Desktop) */
-    .nav-item.dropdown{ position:relative; display:inline-flex; align-items:center; }
-    .dropdown-toggle .chev{ font-size:12px; opacity:.85; }
+    /* Tayflar (desktop) */
+    .tayflar-wrap{ position:relative; }
+    .tayflar-toggle{
+      font: inherit;
+      color: var(--text);
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.03);
+      padding:10px 14px;
+      border-radius:14px;
+      cursor:pointer;
+      display:inline-flex; align-items:center; gap:10px;
+    }
+    .tayflar-toggle:hover{ background: rgba(255,255,255,.06); }
+    .tayflar-toggle .chev{ font-size:12px; opacity:.85; }
 
-    .dropdown-menu{
+    .mega{
       display:none;
       position:absolute;
-      top: calc(100% + 10px);
-      left:0;
-      min-width: 240px;
-      padding: 10px;
-      border-radius: 14px;
+      right:0;
+      top: calc(100% + 12px);
+      width: min(760px, calc(100vw - 24px));
       background: rgba(10,14,28,.92);
       border:1px solid rgba(255,255,255,.10);
+      border-radius: 18px;
       box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
+      padding: 14px;
       z-index: 9999;
     }
-    .nav-item.dropdown.open > .dropdown-menu{ display:block; }
+    .tayflar-wrap.open .mega{ display:block; }
 
-    .dropdown-link{
-      display:block;
-      padding:10px 10px;
-      border-radius:12px;
-      color:var(--text);
-      border:1px solid transparent;
+    .mega-head{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px; margin-bottom:10px;
     }
-    .dropdown-link:hover{
-      background: rgba(255,255,255,.06);
-      border-color: rgba(255,255,255,.10);
+    .mega-head .hint{ color:var(--muted); font-size:13px; opacity:.95; }
+
+    .mega-grid{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:10px;
     }
+    .tile{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      border-radius: 14px;
+      padding: 12px;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      display:flex; flex-direction:column; gap:6px;
+    }
+    .tile:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.05);
+      border-color: rgba(255,255,255,.16);
+    }
+    .tile b{ letter-spacing:.2px; }
+    .tile small{ color:var(--muted); }
+
+    .quick-row{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255,255,255,.10);
+    }
+    .link-pill{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      color: var(--muted);
+      padding:8px 12px;
+      border-radius: 999px;
+    }
+    .link-pill:hover{ color: var(--text); background: rgba(255,255,255,.06); }
 
     /* HERO */
-    .hero{ padding:56px 0 20px; }
-    .hero-grid{
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap:22px;
-      align-items:stretch;
-    }
-    .headline{
-      border:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border-radius: var(--radius);
-      padding:26px;
+    main{ padding: 36px 0 40px; }
+    .hero{
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border-radius: 22px;
+      padding: 28px;
       box-shadow: var(--shadow);
-      overflow:hidden;
       position:relative;
+      overflow:hidden;
     }
-    .headline:before{
+    .hero:before{
       content:"";
       position:absolute; inset:-2px;
       background:
-        radial-gradient(600px 300px at 15% 10%, rgba(110,124,255,.22), transparent 60%),
-        radial-gradient(600px 300px at 75% 25%, rgba(80,227,194,.16), transparent 60%);
-      pointer-events:none;
+        radial-gradient(700px 360px at 15% 10%, rgba(110,124,255,.22), transparent 60%),
+        radial-gradient(700px 360px at 80% 20%, rgba(80,227,194,.14), transparent 60%);
       opacity:.9;
+      pointer-events:none;
     }
-    .headline > *{ position:relative; }
+    .hero > *{ position:relative; }
     .kicker{
-      display:inline-flex; gap:10px; align-items:center;
+      display:inline-flex; align-items:center; gap:10px;
       padding:8px 12px;
-      border-radius: 999px;
-      border:1px solid var(--line);
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
-      color:var(--muted);
+      color: var(--muted);
+      margin-bottom: 14px;
       width: fit-content;
-      margin-bottom:14px;
     }
     h1{
+      margin: 8px 0 10px;
       font-size: clamp(28px, 3.6vw, 46px);
-      margin: 10px 0 10px;
-      letter-spacing:.2px;
       line-height:1.12;
     }
     .lead{
-      color:var(--muted);
-      font-size: clamp(14px, 1.6vw, 18px);
-      max-width: 64ch;
-      margin: 0 0 18px;
+      margin:0 0 18px;
+      color: var(--muted);
+      font-size: clamp(14px, 1.55vw, 18px);
+      max-width: 70ch;
     }
-    .hero-actions{ display:flex; gap:12px; flex-wrap:wrap; margin-top:10px; }
+    .hero-actions{ display:flex; gap:12px; flex-wrap:wrap; margin-top: 8px; }
 
-    .side{
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      border-radius: var(--radius);
-      padding:18px;
-      box-shadow: var(--shadow);
-    }
-    .side h3{ margin: 6px 0 8px; }
-    .side p{ margin:0; color:var(--muted); }
-    .stat{
-      display:grid; grid-template-columns: 1fr 1fr;
-      gap:10px; margin-top:14px;
-    }
-    .pill{
-      border:1px solid var(--line);
-      border-radius: 14px;
-      padding:12px;
-      background: rgba(255,255,255,.02);
-    }
-    .pill b{ display:block; font-size:18px; }
-    .pill small{ color:var(--muted); }
-
-    /* SECTIONS */
-    section{ padding: 42px 0; }
-    .section-head{
-      display:flex; align-items:flex-end; justify-content:space-between;
-      gap:14px; margin-bottom: 14px;
-    }
-    .section-head h2{ margin:0; font-size: 26px; }
+    /* Sections */
+    section{ padding: 34px 0; }
+    .section-head{ display:flex; justify-content:space-between; gap:14px; align-items:flex-end; margin-bottom: 12px; }
+    .section-head h2{ margin:0; font-size: 24px; }
     .section-head p{ margin:0; color:var(--muted); max-width: 70ch; }
 
     .grid{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
-      gap:14px;
+      gap: 14px;
     }
     .card{
-      border:1px solid var(--line);
+      border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
-      border-radius: var(--radius);
-      padding:16px;
-      transition: transform .15s ease, background .15s ease;
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
     }
-    .card:hover{ transform: translateY(-2px); background: rgba(255,255,255,.05); }
+    .card:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.05);
+      border-color: rgba(255,255,255,.16);
+    }
     .tag{
-      display:inline-flex;
-      gap:8px; align-items:center;
+      display:inline-flex; gap:8px; align-items:center;
       padding:6px 10px;
       border-radius: 999px;
       background: rgba(110,124,255,.14);
       border:1px solid rgba(110,124,255,.28);
-      color: var(--text);
       font-size: 12px;
-      letter-spacing:.2px;
     }
-    .card h4{ margin:10px 0 6px; font-size: 18px; }
-    .card p{ margin:0; color:var(--muted); }
-    .card ul{ margin:10px 0 0; padding-left:18px; color:var(--muted); }
-    .card li{ margin:6px 0; }
+    .card h3{ margin:10px 0 6px; font-size: 18px; }
+    .card p{ margin:0; color: var(--muted); }
 
-    /* FILTER */
-    .filters{
-      display:flex; gap:10px; flex-wrap:wrap;
-      margin-top: 10px;
-    }
-    .chip{
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.02);
-      color: var(--muted);
-      padding:8px 12px;
-      border-radius: 999px;
-      cursor:pointer;
-      user-select:none;
-    }
-    .chip.active{
-      color: var(--text);
-      border-color: rgba(80,227,194,.35);
-      background: rgba(80,227,194,.10);
-    }
-
-    /* CONTACT */
-    .contact-box{
-      border:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border-radius: var(--radius);
-      padding:18px;
+    /* Contact */
+    .contact{
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border-radius: 18px;
+      padding: 18px;
       display:grid;
       grid-template-columns: 1fr 1fr;
-      gap:14px;
+      gap: 14px;
     }
-    .contact-box p{ color:var(--muted); margin:0; }
-    .field{
-      display:flex; flex-direction:column; gap:8px;
-    }
-    .field input, .field textarea{
-      background: rgba(0,0,0,.25);
-      border:1px solid var(--line);
+    .field{ display:flex; flex-direction:column; gap:8px; }
+    input, textarea{
+      background: rgba(0,0,0,.22);
+      border:1px solid rgba(255,255,255,.10);
       color: var(--text);
       border-radius: 14px;
-      padding:12px 12px;
+      padding: 12px;
       outline:none;
-      font-size: 14px;
-    }
-    .field textarea{ min-height: 110px; resize: vertical; }
-
-    footer{
-      padding: 24px 0 40px;
-      border-top:1px solid var(--line);
-      color:var(--muted);
-    }
-
-    /* MOBILE */
-    .mobile-toggle{ display:none; }
-    @media (max-width: 920px){
-      .hero-grid{ grid-template-columns: 1fr; }
-      .grid{ grid-template-columns: 1fr; }
-      .contact-box{ grid-template-columns: 1fr; }
-      .brand{ min-width:auto; }
-    }
-    @media (max-width: 760px){
-      .menu{ display:none; }
-      .mobile-toggle{ display:inline-flex; }
-    }
-
-    .drawer{
-      display:none;
-      border-top:1px solid var(--line);
-      padding: 10px 0 16px;
-    }
-    .drawer a, .drawer .nav-link{
-      display:block;
-      width:100%;
-      text-align:left;
-      padding:10px 12px;
-      border-radius: 12px;
-      color: var(--muted);
-      border:1px solid transparent;
-      background: transparent;
       font: inherit;
     }
-    .drawer a:hover, .drawer .nav-link:hover{
-      color:var(--text);
-      border-color:var(--line);
-      background: rgba(255,255,255,.03);
+    textarea{ min-height: 110px; resize: vertical; }
+    .note{ color: var(--muted); margin-top: 10px; }
+
+    footer{
+      margin-top: 34px;
+      padding: 22px 0 36px;
+      border-top:1px solid rgba(255,255,255,.10);
+      color: var(--muted);
+    }
+
+    /* Responsive */
+    .mobile-btn{ display:none; }
+    @media (max-width: 980px){
+      .mega-grid{ grid-template-columns: repeat(2, 1fr); }
+      .grid{ grid-template-columns: 1fr; }
+      .contact{ grid-template-columns: 1fr; }
+    }
+    @media (max-width: 760px){
+      .tayflar-wrap{ display:none; } /* desktop dropdown gizle */
+      .mobile-btn{ display:inline-flex; } /* mobil menü aç */
+    }
+
+    /* Drawer (mobile) */
+    .drawer{
+      display:none;
+      border-top:1px solid rgba(255,255,255,.10);
+      padding: 10px 0 16px;
     }
     .drawer.open{ display:block; }
-
-    /* DROPDOWN (Drawer/Mobile): absolute değil, içeride aç */
-    .drawer .nav-item.dropdown{ display:block; }
-    .drawer .dropdown-menu{
-      position: static;
-      min-width: 0;
-      box-shadow: none;
-      background: transparent;
-      border: 0;
-      padding: 6px 0 6px 10px;
-    }
-    .drawer .dropdown-link{
-      border:1px solid transparent;
-      color: var(--muted);
+    .drawer a, .drawer button{
+      width:100%;
+      text-align:left;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
       padding: 10px 12px;
+      border-radius: 14px;
+      border:1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      font: inherit;
+      cursor: pointer;
     }
-    .drawer .dropdown-link:hover{
+    .drawer a:hover, .drawer button:hover{
       color: var(--text);
-      border-color: var(--line);
+      border-color: rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
     }
+    .drawer .sub{
+      display:none;
+      margin: 6px 0 0 10px;
+      padding-left: 8px;
+      border-left: 1px solid rgba(255,255,255,.10);
+    }
+    .drawer .sub a{ justify-content:flex-start; }
+    .drawer .acc.open + .sub{ display:block; }
   </style>
 </head>
 
 <body>
-  <!-- NAV -->
-  <header class="nav">
-    <div class="container">
-      <div class="nav-inner">
-        <a class="brand" href="#top" aria-label="ALLTAYF ana sayfa">
-          <img src="logo.png" alt="ALLTAYF Logo" onerror="this.style.display='none'">
-          <div class="title">
-            <b>ALLTAYF</b>
-            <small>Kelebek Etkisi Evreni</small>
-          </div>
-        </a>
 
-        <nav class="menu" aria-label="Menü">
-          <a href="#vizyon">Vizyon</a>
-          <a href="#koy">Köy</a>
-          <a href="#tinyhouse">Tiny House</a>
+<header class="nav">
+  <div class="container">
+    <div class="nav-inner">
 
-          <div class="nav-item dropdown">
-            <button class="nav-link dropdown-toggle" type="button" aria-expanded="false">
-              Tayflar <span class="chev">▾</span>
-            </button>
-            <div class="dropdown-menu">
-              <a class="dropdown-link" href="#farm">Alltayf Farm</a>
-              <a class="dropdown-link" href="#build">Alltayf Build</a>
-              <a class="dropdown-link" href="#energy">Alltayf Energy</a>
-              <a class="dropdown-link" href="#drill">Alltayf Drill</a>
-              <a class="dropdown-link" href="#stone">Alltayf Stone</a>
-              <a class="dropdown-link" href="#tech">Alltayf Tech</a>
-              <a class="dropdown-link" href="#stay">Alltayf Stay</a>
-              <a class="dropdown-link" href="#event">Alltayf Event</a>
-            </div>
-          </div>
-
-          <a href="#faaliyet">Faaliyet Alanları</a>
-          <a href="#iletisim">İletişim</a>
-        </nav>
-
-        <div class="cta">
-          <button class="btn mobile-toggle" id="menuBtn" aria-label="Menüyü aç/kapat">Menü</button>
-          <a class="btn primary" href="https://wa.me/905431676888" target="_blank" rel="noopener">WhatsApp</a>
+      <a class="brand" href="#top" aria-label="ALLTAYF ana sayfa">
+        <img src="logo.png" alt="ALLTAYF Logo" onerror="this.style.display='none'">
+        <div class="title">
+          <b>ALLTAYF</b>
+          <small>Kelebek Etkisi Evreni</small>
         </div>
-      </div>
+      </a>
 
-      <!-- Mobile Drawer -->
-      <div class="drawer" id="drawer">
-        <a href="#vizyon">Vizyon</a>
-        <a href="#koy">Köy</a>
-        <a href="#tinyhouse">Tiny House</a>
-
-        <div class="nav-item dropdown">
-          <button class="nav-link dropdown-toggle" type="button" aria-expanded="false">
+      <!-- Desktop: sadece Tayflar + hızlı linkler -->
+      <div class="nav-actions">
+        <div class="tayflar-wrap" id="tayflarWrap">
+          <button class="tayflar-toggle" id="tayflarBtn" type="button" aria-expanded="false">
             Tayflar <span class="chev">▾</span>
           </button>
-          <div class="dropdown-menu">
-            <a class="dropdown-link" href="#farm">Alltayf Farm</a>
-            <a class="dropdown-link" href="#build">Alltayf Build</a>
-            <a class="dropdown-link" href="#energy">Alltayf Energy</a>
-            <a class="dropdown-link" href="#drill">Alltayf Drill</a>
-            <a class="dropdown-link" href="#stone">Alltayf Stone</a>
-            <a class="dropdown-link" href="#tech">Alltayf Tech</a>
-            <a class="dropdown-link" href="#stay">Alltayf Stay</a>
-            <a class="dropdown-link" href="#event">Alltayf Event</a>
+
+          <div class="mega" id="tayflarMenu" role="menu" aria-label="ALLTAYF Tayfları">
+            <div class="mega-head">
+              <div class="hint">ALLTAYF ekosistemi — tek merkez, sekiz tayf.</div>
+              <a class="link-pill" href="#iletisim">Teklif Al</a>
+            </div>
+
+            <div class="mega-grid">
+              <a class="tile" href="#farm"><b>Alltayf Farm</b><small>Tarım • Safran • Seracılık</small></a>
+              <a class="tile" href="#build"><b>Alltayf Build</b><small>Tiny House • Çelik • Yapılar</small></a>
+              <a class="tile" href="#energy"><b>Alltayf Energy</b><small>GES • Off-grid • Depolama</small></a>
+              <a class="tile" href="#drill"><b>Alltayf Drill</b><small>Sondaj • Su altyapısı</small></a>
+              <a class="tile" href="#stone"><b>Alltayf Stone</b><small>Yapay taş • Dekoratif</small></a>
+              <a class="tile" href="#tech"><b>Alltayf Tech</b><small>Yazılım • Otomasyon</small></a>
+              <a class="tile" href="#stay"><b>Alltayf Stay</b><small>Konaklama • Doğa turizmi</small></a>
+              <a class="tile" href="#event"><b>Alltayf Event</b><small>Organizasyon • Deneyim</small></a>
+            </div>
+
+            <div class="quick-row">
+              <a class="link-pill" href="#vizyon">Vizyon</a>
+              <a class="link-pill" href="#koy">Köy</a>
+              <a class="link-pill" href="#tinyhouse">Tiny House</a>
+              <a class="link-pill" href="#faaliyet">Faaliyet</a>
+            </div>
           </div>
         </div>
 
-        <a href="#faaliyet">Faaliyet Alanları</a>
-        <a href="#iletisim">İletişim</a>
+        <button class="btn mobile-btn" id="menuBtn" type="button" aria-label="Menüyü aç/kapat">Menü</button>
+        <a class="btn primary" href="https://wa.me/905431676888" target="_blank" rel="noopener">WhatsApp</a>
       </div>
-    </div>
-  </header>
 
-  <!-- HERO -->
-  <main id="top" class="container">
-    <div class="hero">
-      <div class="hero-grid">
-        <div class="headline">
-          <div class="kicker">🦋 Kelebek Etkisi • Zaman Döngüsü • Üretim</div>
-          <h1>ALLTAYF Evreni: Köyden doğan, tayflara yayılan bir sistem.</h1>
-          <p class="lead">
-            Önce <b>Kelebek Etkisi Köyü</b>, sonra <b>Tiny House Doğa Turizmi</b>.
-            Ardından Alltayf Tayfları: <b>Tarım</b>, <b>Enerji</b>, <b>İmalat</b> ve <b>Teknoloji</b>.
-            Her şey “zamana endeksli döngü” ile büyür.
-          </p>
-          <div class="hero-actions">
-            <a class="btn primary" href="#koy">Köyü Keşfet</a>
-            <a class="btn" href="#faaliyet">Faaliyet Alanları</a>
-            <a class="btn" href="#iletisim">Teklif Al</a>
-          </div>
-        </div>
-
-        <aside class="side" aria-label="Özet kutusu">
-          <h3>Alltayf Prensibi</h3>
-          <p>“Eğlenmek kaçmak değildir; hayatta kalmanın onurlu yoludur.”</p>
-
-          <div class="stat">
-            <div class="pill">
-              <b>Merkez</b>
-              <small>Kelebek Etkisi Köyü</small>
-            </div>
-            <div class="pill">
-              <b>İlk Gelir</b>
-              <small>Tiny House Turizmi</small>
-            </div>
-            <div class="pill">
-              <b>Tayf-1</b>
-              <small>Tarım & Seracılık</small>
-            </div>
-            <div class="pill">
-              <b>Tayf-2</b>
-              <small>Enerji Sistemleri</small>
-            </div>
-          </div>
-        </aside>
-      </div>
     </div>
 
-    <!-- VIZYON -->
-    <section id="vizyon">
-      <div class="section-head">
-        <div>
-          <h2>Vizyon</h2>
-          <p>
-            Alltayf, bir merkezden yayılan: yaşam, üretim ve teknolojiyi aynı hikâyede buluşturan bir evrendir.
-            Gösteriş değil; gerçek kullanım, deneyim ve süreklilik.
-          </p>
-        </div>
+    <!-- Mobile Drawer -->
+    <div class="drawer" id="drawer">
+      <a href="#vizyon">Vizyon</a>
+      <a href="#koy">Köy</a>
+      <a href="#tinyhouse">Tiny House</a>
+
+      <button class="acc" id="accTayflar" type="button" aria-expanded="false">
+        Tayflar <span class="chev">▾</span>
+      </button>
+      <div class="sub" id="subTayflar">
+        <a href="#farm">Alltayf Farm</a>
+        <a href="#build">Alltayf Build</a>
+        <a href="#energy">Alltayf Energy</a>
+        <a href="#drill">Alltayf Drill</a>
+        <a href="#stone">Alltayf Stone</a>
+        <a href="#tech">Alltayf Tech</a>
+        <a href="#stay">Alltayf Stay</a>
+        <a href="#event">Alltayf Event</a>
       </div>
 
-      <div class="grid">
-        <div class="card">
-          <span class="tag">⏳ Zaman Döngüsü</span>
-          <h4>Süreklilik Tasarımı</h4>
-          <p>Üretim → satış → geri besleme → iyileştirme. Döngü varsa oluşum büyür.</p>
-          <ul>
-            <li>Haftalık ritim</li>
-            <li>Tekrarlı küçük hamleler</li>
-            <li>Ölçüm ve gelişim</li>
-          </ul>
-        </div>
+      <a href="#faaliyet">Faaliyet Alanları</a>
+      <a href="#iletisim">İletişim</a>
+    </div>
 
-        <div class="card">
-          <span class="tag">🌍 Fiziksel Merkez</span>
-          <h4>İspat Alanı</h4>
-          <p>Köy; anlatılanın yaşandığı, ürünlerin test edildiği gerçek sahadır.</p>
-          <ul>
-            <li>Tiny house kullanımı</li>
-            <li>Enerji bağımsızlığı</li>
-            <li>Tarım uygulamaları</li>
-          </ul>
-        </div>
+  </div>
+</header>
 
-        <div class="card">
-          <span class="tag">🧠 Tayf Mantığı</span>
-          <h4>Aynı Işığın Renkleri</h4>
-          <p>Köyden doğan ihtiyaçlar; tarım, enerji, imalat ve teknoloji tayflarına dönüşür.</p>
-          <ul>
-            <li>İhtiyaç → çözüm</li>
-            <li>Çözüm → ürün</li>
-            <li>Ürün → satış</li>
-          </ul>
-        </div>
+<main id="top" class="container">
+  <div class="hero">
+    <div class="kicker">🦋 Kelebek Etkisi • Zaman Döngüsü • Üretim</div>
+    <h1>ALLTAYF Evreni: Köyden doğan, tayflara yayılan bir sistem.</h1>
+    <p class="lead">
+      Ekonomik özgürlük: kimseyi kırmadan, kendi emeğinle kurulan bir düzen.
+      Köy → Tiny House → Tayflar → ürün → satış → geri besleme.
+    </p>
+    <div class="hero-actions">
+      <a class="btn primary" href="#iletisim">Teklif Al</a>
+      <a class="btn" href="#faaliyet">Faaliyet Alanları</a>
+      <a class="btn" href="#koy">Köyü Keşfet</a>
+    </div>
+  </div>
+
+  <section id="vizyon">
+    <div class="section-head">
+      <div>
+        <h2>Vizyon</h2>
+        <p>ALLTAYF bir merkezden yayılan gerçek sistemdir: yaşam + üretim + teknoloji.</p>
       </div>
-    </section>
+    </div>
+    <div class="grid">
+      <div class="card"><span class="tag">⏳ Döngü</span><h3>Süreklilik</h3><p>Üretim → satış → iyileştirme → büyüme.</p></div>
+      <div class="card"><span class="tag">🌍 Merkez</span><h3>İspat Alanı</h3><p>Köy anlatı değil, sahadır.</p></div>
+      <div class="card"><span class="tag">🧠 Tayflar</span><h3>Aynı Işığın Renkleri</h3><p>İhtiyaçtan çözüme, çözümden ürüne.</p></div>
+    </div>
+  </section>
 
-    <!-- KOY -->
-    <section id="koy">
-      <div class="section-head">
-        <div>
-          <h2>Kelebek Etkisi Köyü</h2>
-          <p>
-            Alltayf Evreni’nin kalbi. Sessiz, sade, doğa ile uyumlu bir yaşam/üretim modeli.
-            Burada her şey “küçük ama sürekli” başlar.
-          </p>
-        </div>
+  <section id="koy">
+    <div class="section-head">
+      <div>
+        <h2>Kelebek Etkisi Köyü</h2>
+        <p>Sessiz, sade, doğa ile uyumlu yaşam/üretim modeli.</p>
       </div>
+    </div>
+    <div class="grid">
+      <div class="card"><span class="tag">🦋 Merkez</span><h3>Deneyim + Hikâye</h3><p>Misafir sadece kalmaz; hikâyeye dahil olur.</p></div>
+      <div class="card"><span class="tag">🧩 Modüler</span><h3>Aşama Aşama</h3><p>Altyapı → tiny → enerji → tarım.</p></div>
+      <div class="card"><span class="tag">✅ Güven</span><h3>Kullandığımızı satarız</h3><p>Referans: gerçek kullanım.</p></div>
+    </div>
+  </section>
 
-      <div class="grid">
-        <div class="card">
-          <span class="tag">🦋 Merkez</span>
-          <h4>Deneyim + Hikâye</h4>
-          <p>Misafir, burada sadece kalmaz; hikâyenin parçası olur.</p>
-        </div>
-        <div class="card">
-          <span class="tag">🧩 Modüler</span>
-          <h4>Kurulum Mantığı</h4>
-          <p>Altyapı → tiny house → enerji → tarım. Aşama aşama büyür.</p>
-        </div>
-        <div class="card">
-          <span class="tag">✅ Güven</span>
-          <h4>“Kullandığımızı satarız.”</h4>
-          <p>Köyde kullanılan sistemler; ürünün en güçlü referansıdır.</p>
-        </div>
+  <section id="tinyhouse">
+    <div class="section-head">
+      <div>
+        <h2>Tiny House</h2>
+        <p>İlk düzenli gelir için en güçlü halka: görünür, dokunulur, hızlı.</p>
       </div>
-    </section>
+    </div>
+    <div class="grid">
+      <div class="card"><span class="tag">🏡 Konaklama</span><h3>Doğa Deneyimi</h3><p>Minimal yaşam, yüksek huzur.</p></div>
+      <div class="card"><span class="tag">📈 Gelir</span><h3>Nakit Akışı</h3><p>Önce düzenli satış, sonra büyüme.</p></div>
+      <div class="card"><span class="tag">🧲 Çekim</span><h3>İçerik & Referans</h3><p>Her konaklama bir kanıt üretir.</p></div>
+    </div>
+  </section>
 
-    <!-- TINY HOUSE -->
-    <section id="tinyhouse">
-      <div class="section-head">
-        <div>
-          <h2>Tiny House Doğa Turizmi</h2>
-          <p>İlk nakit akışı için en güçlü halka. Görsel, dokunulabilir, hızlı büyüyen bir alan.</p>
-        </div>
+  <!-- Tayflar hedef bölümleri -->
+  <section id="farm"><div class="section-head"><div><h2>Alltayf Farm</h2><p>Tarım • Safran • Seracılık</p></div></div></section>
+  <section id="build"><div class="section-head"><div><h2>Alltayf Build</h2><p>Tiny House • Çelik • Yapılar</p></div></div></section>
+  <section id="energy"><div class="section-head"><div><h2>Alltayf Energy</h2><p>GES • Off-grid • Depolama</p></div></div></section>
+  <section id="drill"><div class="section-head"><div><h2>Alltayf Drill</h2><p>Sondaj • Su altyapısı</p></div></div></section>
+  <section id="stone"><div class="section-head"><div><h2>Alltayf Stone</h2><p>Yapay taş • Dekoratif</p></div></div></section>
+  <section id="tech"><div class="section-head"><div><h2>Alltayf Tech</h2><p>Yazılım • Otomasyon</p></div></div></section>
+  <section id="stay"><div class="section-head"><div><h2>Alltayf Stay</h2><p>Konaklama • Doğa turizmi</p></div></div></section>
+  <section id="event"><div class="section-head"><div><h2>Alltayf Event</h2><p>Organizasyon • Deneyim</p></div></div></section>
+
+  <section id="faaliyet">
+    <div class="section-head">
+      <div>
+        <h2>Faaliyet Alanları</h2>
+        <p>Alltayf’ın kapsamını anlaşılır başlıklara böldük. İstersen bunu sonra filtreli kartlara çevirelim.</p>
       </div>
+    </div>
+    <div class="grid">
+      <div class="card"><span class="tag">⚡ Enerji</span><h3>GES / Depolama</h3><p>Kurulum, bakım, ticaret.</p></div>
+      <div class="card"><span class="tag">🏗️ Yapılar</span><h3>Tiny / Çelik / Sera</h3><p>Üretim, kurulum, proje.</p></div>
+      <div class="card"><span class="tag">🌾 Tarım</span><h3>Safran / Seracılık</h3><p>Üretim, paketleme, marka.</p></div>
+    </div>
+  </section>
 
-      <div class="grid">
-        <div class="card">
-          <span class="tag">🏡 Konaklama</span>
-          <h4>Doğa Deneyimi</h4>
-          <p>Minimal yaşam, yüksek huzur. Sade ama güçlü bir atmosfer.</p>
-        </div>
-        <div class="card">
-          <span class="tag">📈 Gelir</span>
-          <h4>Önce Düzenli Satış</h4>
-          <p>Ekonomik özgürlük, ilk düzenli satışla başlar.</p>
-        </div>
-        <div class="card">
-          <span class="tag">🧲 Çekim</span>
-          <h4>İçerik Üretimi</h4>
-          <p>Her konaklama: video, fotoğraf, yorum, referans demektir.</p>
-        </div>
+  <section id="iletisim">
+    <div class="section-head">
+      <div>
+        <h2>İletişim</h2>
+        <p>Teklif, iş birliği veya proje için mesaj bırak.</p>
       </div>
-    </section>
+    </div>
 
-    <!-- TAYFLAR -->
-    <section id="tayflar">
-      <div class="section-head">
-        <div>
-          <h2>Alltayf Tayfları</h2>
-          <p>Köyden çıkan ihtiyaçlar, tayflara dönüşür: Tarım, Enerji, İmalat, Teknoloji.</p>
-        </div>
-      </div>
-
-      <div class="grid">
-        <div class="card" data-cat="tarim">
-          <span class="tag">🌾 Tarım Tayfı</span>
-          <h4>Seracılık • Safran • Aromatik Bitkiler</h4>
-          <p>Topraktan katma değere. Ürün değil; hikâyeli ürün.</p>
-        </div>
-
-        <div class="card" data-cat="enerji">
-          <span class="tag">⚡ Enerji Tayfı</span>
-          <h4>Güneş • Depolama • Off-grid</h4>
-          <p>Önce köyü besler, sonra dışarıya çözüm olur.</p>
-        </div>
-
-        <div class="card" data-cat="imalat">
-          <span class="tag">🏗️ İmalat Tayfı</span>
-          <h4>Tiny House • Çelik • Sera Yapıları</h4>
-          <p>Kullanılan sistemler üretime dönüşür: modüler, hızlı, güçlü.</p>
-        </div>
-
-        <div class="card" data-cat="teknoloji">
-          <span class="tag">🧠 Teknoloji Tayfı</span>
-          <h4>Yazılım • Otomasyon • Dijital Ödeme</h4>
-          <p>En son devreye girer: köksüz dijital değil; sahası olan dijital.</p>
-        </div>
-
-        <div class="card" data-cat="ticaret">
-          <span class="tag">🌍 İç/Dış Ticaret</span>
-          <h4>E-ticaret • İthalat/İhracat</h4>
-          <p>Ürünleri büyüten ağ: lojistik, pazarlama ve satış kanalları.</p>
-        </div>
-
-        <div class="card" data-cat="diger">
-          <span class="tag">✨ Diğer</span>
-          <h4>Dekoratif Ürünler • Kozmetik • Medya</h4>
-          <p>Evren genişler: doğru zaman, doğru döngü ile.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAALIYET -->
-    <section id="faaliyet">
-      <div class="section-head">
-        <div>
-          <h2>Faaliyet Alanları</h2>
-          <p>
-            Ana sözleşmedeki kapsamı, sitede anlaşılır kategorilere çevirdik.
-            Aşağıdan filtreleyip görebilirsin.
-          </p>
-          <div class="filters" id="filters">
-            <span class="chip active" data-filter="all">Tümü</span>
-            <span class="chip" data-filter="enerji">Enerji</span>
-            <span class="chip" data-filter="insaat">İnşaat & Yapılar</span>
-            <span class="chip" data-filter="tarim">Tarım & Seracılık</span>
-            <span class="chip" data-filter="imalat">İmalat & Kalıp</span>
-            <span class="chip" data-filter="teknoloji">Teknoloji</span>
-            <span class="chip" data-filter="ticaret">Ticaret & Lojistik</span>
-            <span class="chip" data-filter="diger">Diğer</span>
-          </div>
-        </div>
+    <div class="contact">
+      <div>
+        <h3>Hızlı İletişim</h3>
+        <p><b>Telefon:</b> +90 543 167 68 88</p>
+        <p><b>E-posta:</b> info@alltayf.com</p>
+        <p style="margin-top:10px;">
+          <a class="btn primary" href="https://wa.me/905431676888" target="_blank" rel="noopener">WhatsApp’tan Yaz</a>
+        </p>
+        <p class="note" id="formNote"></p>
       </div>
 
-      <div class="grid" id="faaliyetGrid">
-        <div class="card" data-filter="enerji">
-          <span class="tag">⛽ Akaryakıt & LPG</span>
-          <h4>Akaryakıt, LPG, İstasyon ve Tesisler</h4>
-          <ul>
-            <li>Akaryakıt/LPG alım-satım, depolama, dolum</li>
-            <li>İstasyon açma/işletme, servis-yıkama</li>
-            <li>LPG dönüşüm ve ekipman ticareti</li>
-          </ul>
+      <form id="form">
+        <div class="field">
+          <label for="name">Ad Soyad</label>
+          <input id="name" name="name" placeholder="Ad Soyad" required />
         </div>
-
-        <div class="card" data-filter="enerji">
-          <span class="tag">☀️ Yenilenebilir</span>
-          <h4>GES • RES • Biyogaz • Enerji Depolama</h4>
-          <ul>
-            <li>Üretim tesisi kurulumu ve işletme</li>
-            <li>Solar panel, inverter, kablo ve ekipman ticareti</li>
-            <li>Enerji depolama sistemleri kurulum & bakım</li>
-          </ul>
+        <div class="field" style="margin-top:10px;">
+          <label for="msg">Mesaj</label>
+          <textarea id="msg" name="msg" placeholder="Ne istiyorsun? (Tiny house, sera aparatları, enerji sistemi…)" required></textarea>
         </div>
-
-        <div class="card" data-filter="insaat">
-          <span class="tag">🏗️ İnşaat</span>
-          <h4>Taahhüt • Anahtar Teslim • İhaleler</h4>
-          <ul>
-            <li>Konut, işyeri, fabrika, yol, altyapı</li>
-            <li>Kamu/özel ihalelere katılım</li>
-            <li>Restorasyon, dekorasyon, montaj işleri</li>
-          </ul>
+        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn primary" type="submit">Mesajı Hazırla</button>
+          <button class="btn" type="button" id="copyBtn">Kopyala</button>
         </div>
+      </form>
+    </div>
+  </section>
 
-        <div class="card" data-filter="insaat">
-          <span class="tag">🏡 Modüler Yapılar</span>
-          <h4>Tiny House • Prefabrik • Çelik • Sera</h4>
-          <ul>
-            <li>Tiny house ve prefabrik yapılar</li>
-            <li>Çelik konstrüksiyon, depo ve hangar</li>
-            <li>Sera yapıları imalat/kurulum/kiralama</li>
-          </ul>
-        </div>
+  <footer>
+    <div class="container" style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+      <div>© <span id="year"></span> ALLTAYF • Kelebek Etkisi Evreni</div>
+      <div style="opacity:.85;">Konya • Türkiye</div>
+    </div>
+  </footer>
+</main>
 
-        <div class="card" data-filter="tarim">
-          <span class="tag">🌾 Tarım</span>
-          <h4>Safran • Aromatik Bitkiler • Üretim</h4>
-          <ul>
-            <li>Tarım ürünleri üretimi, alım-satım</li>
-            <li>Tohum/fide/fidan geliştirme</li>
-            <li>Sulama sistemleri, danışmanlık</li>
-          </ul>
-        </div>
+<script>
+  // Desktop mega menu
+  const tayflarWrap = document.getElementById('tayflarWrap');
+  const tayflarBtn  = document.getElementById('tayflarBtn');
 
-        <div class="card" data-filter="tarim">
-          <span class="tag">🐄 Hayvancılık & Gıda</span>
-          <h4>Besicilik • Kesimhane • Bakliyat</h4>
-          <ul>
-            <li>Hayvan alım-satım, yetiştiricilik</li>
-            <li>Soğuk hava, mezbaha, tesis işletme</li>
-            <li>Bakliyat/hububat üretim ve paketleme</li>
-          </ul>
-        </div>
+  if (tayflarWrap && tayflarBtn) {
+    tayflarBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const isOpen = tayflarWrap.classList.toggle('open');
+      tayflarBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
 
-        <div class="card" data-filter="imalat">
-          <span class="tag">⚙️ İmalat</span>
-          <h4>Metal/Plastik • Sera Aparatları • Kalıp</h4>
-          <ul>
-            <li>Plastik enjeksiyon, metal/pink döküm</li>
-            <li>Kalıp, aparat, bağlantı elemanı üretimi</li>
-            <li>Galvanizli boru aparatları (sera dahil)</li>
-          </ul>
-        </div>
+    document.addEventListener('click', () => {
+      tayflarWrap.classList.remove('open');
+      tayflarBtn.setAttribute('aria-expanded', 'false');
+    });
 
-        <div class="card" data-filter="teknoloji">
-          <span class="tag">💻 Yazılım</span>
-          <h4>Web • Mobil • Otomasyon</h4>
-          <ul>
-            <li>Bilgi işlem merkezleri, veri hizmetleri</li>
-            <li>Donanım/yazılım destek ve danışmanlık</li>
-            <li>E-ticaret altyapıları</li>
-          </ul>
-        </div>
+    const menu = document.getElementById('tayflarMenu');
+    if (menu) menu.addEventListener('click', (e) => e.stopPropagation());
+  }
 
-        <div class="card" data-filter="teknoloji">
-          <span class="tag">🧬 Blockchain</span>
-          <h4>Dijital Ödeme • Altyapı • Danışmanlık</h4>
-          <ul>
-            <li>Blockchain altyapısı geliştirme</li>
-            <li>Dijital ödeme sistemleri</li>
-            <li>Kripto varlık çözümleri</li>
-          </ul>
-        </div>
+  // Mobile drawer
+  const menuBtn = document.getElementById('menuBtn');
+  const drawer  = document.getElementById('drawer');
 
-        <div class="card" data-filter="ticaret">
-          <span class="tag">📦 Lojistik</span>
-          <h4>Depolama • Paketleme • Sevkiyat</h4>
-          <ul>
-            <li>Nakliye organizasyonu</li>
-            <li>Depolama çözümleri</li>
-            <li>Paketleme ve sevkiyat süreçleri</li>
-          </ul>
-        </div>
+  if (menuBtn && drawer) {
+    menuBtn.addEventListener('click', () => drawer.classList.toggle('open'));
+    drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => drawer.classList.remove('open')));
+  }
 
-        <div class="card" data-filter="diger">
-          <span class="tag">🧱 Dekoratif</span>
-          <h4>Kültür Taşı • Yapay Taş</h4>
-          <ul>
-            <li>Çimento esaslı dekoratif kaplama taşları</li>
-            <li>İmalat, ithalat, ihracat</li>
-          </ul>
-        </div>
+  // Mobile accordion for Tayflar
+  const acc = document.getElementById('accTayflar');
+  if (acc) {
+    acc.addEventListener('click', () => {
+      acc.classList.toggle('open');
+      acc.setAttribute('aria-expanded', acc.classList.contains('open') ? 'true' : 'false');
+    });
+  }
 
-        <div class="card" data-filter="diger">
-          <span class="tag">🧴 Kozmetik</span>
-          <h4>Kişisel Bakım • Dermokozmetik</h4>
-          <ul>
-            <li>Üretim, ambalajlama, toptan/perakende</li>
-            <li>AR-GE, distribütörlük, franchise</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-    <!-- ILETISIM -->
-    <section id="iletisim">
-      <div class="section-head">
-        <div>
-          <h2>İletişim</h2>
-          <p>Teklif, iş birliği veya proje için mesaj bırak. (Form şu an mail göndermez; istersen ekleriz.)</p>
-        </div>
-      </div>
+  // Contact form -> message builder + copy
+  let lastMessage = "";
+  const form = document.getElementById('form');
+  const note = document.getElementById('formNote');
+  const copyBtn = document.getElementById('copyBtn');
 
-      <div class="contact-box">
-        <div>
-          <h3>Hızlı İletişim</h3>
-          <p><b>Telefon:</b> +90 543 167 68 88</p>
-          <p><b>E-posta:</b> info@alltayf.com</p>
-          <p style="margin-top:10px;">
-            <a class="btn primary" href="https://wa.me/905431676888" target="_blank" rel="noopener">WhatsApp’tan Yaz</a>
-          </p>
-        </div>
-
-        <form onsubmit="return handleForm(event)">
-          <div class="field">
-            <label for="name">Ad Soyad</label>
-            <input id="name" name="name" placeholder="Ad Soyad" required />
-          </div>
-
-          <div class="field" style="margin-top:10px;">
-            <label for="msg">Mesaj</label>
-            <textarea id="msg" name="msg" placeholder="Ne istiyorsun? (Tiny house, sera aparatları, enerji sistemi…)" required></textarea>
-          </div>
-
-          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-            <button class="btn primary" type="submit">Mesajı Hazırla</button>
-            <button class="btn" type="button" onclick="copyMessage()">Kopyala</button>
-          </div>
-
-          <p id="formNote" style="margin-top:10px; color:var(--muted);"></p>
-        </form>
-      </div>
-    </section>
-
-    <footer>
-      <div class="container">
-        <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;">
-          <div>© <span id="year"></span> ALLTAYF • Kelebek Etkisi Evreni</div>
-          <div style="opacity:.85;">Konya • Türkiye</div>
-        </div>
-      </div>
-    </footer>
-  </main>
-
-  <script>
-    // Mobile menu
-    const menuBtn = document.getElementById('menuBtn');
-    const drawer = document.getElementById('drawer');
-
-    if (menuBtn && drawer) {
-      menuBtn.addEventListener('click', () => drawer.classList.toggle('open'));
-      drawer.querySelectorAll('a').forEach(a =>
-        a.addEventListener('click', () => drawer.classList.remove('open'))
-      );
-    }
-
-    // Year
-    const yearEl = document.getElementById('year');
-    if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-    // Filters
-    const chips = [...document.querySelectorAll('.chip')];
-    const cards = [...document.querySelectorAll('#faaliyetGrid .card')];
-
-    function setFilter(key){
-      chips.forEach(c => c.classList.toggle('active', c.dataset.filter === key));
-      cards.forEach(card => {
-        const hit = (key === 'all') || (card.dataset.filter === key);
-        card.style.display = hit ? 'block' : 'none';
-      });
-    }
-
-    chips.forEach(chip => chip.addEventListener('click', () => setFilter(chip.dataset.filter)));
-
-    // Contact form: creates a WhatsApp-ready message
-    let lastMessage = "";
-
-    function handleForm(e){
+  if (form) {
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
       const name = document.getElementById('name').value.trim();
-      const msg = document.getElementById('msg').value.trim();
+      const msg  = document.getElementById('msg').value.trim();
       lastMessage = `Merhaba, ben ${name}.\n\n${msg}\n\nALLTAYF.com üzerinden iletişim kuruyorum.`;
-      const note = document.getElementById('formNote');
-      note.textContent = "Mesaj hazırlandı. 'Kopyala' ile alıp WhatsApp/E-posta ile gönderebilirsin.";
-      return false;
-    }
+      if (note) note.textContent = "Mesaj hazır ✅ 'Kopyala' ile WhatsApp/E-posta gönderebilirsin.";
+    });
+  }
 
-    async function copyMessage(){
-      const note = document.getElementById('formNote');
-      if(!lastMessage){
-        note.textContent = "Önce 'Mesajı Hazırla' butonuna bas.";
-        return;
-      }
-      try{
+  if (copyBtn) {
+    copyBtn.addEventListener('click', async () => {
+      if (!lastMessage) { if (note) note.textContent = "Önce 'Mesajı Hazırla' butonuna bas."; return; }
+      try {
         await navigator.clipboard.writeText(lastMessage);
-        note.textContent = "Kopyalandı ✅ WhatsApp’a yapıştırabilirsin.";
-      }catch(err){
-        note.textContent = "Kopyalama engellendi. Tarayıcı izin vermedi.";
+        if (note) note.textContent = "Kopyalandı ✅ WhatsApp’a yapıştırabilirsin.";
+      } catch (err) {
+        if (note) note.textContent = "Kopyalama engellendi. Tarayıcı izin vermedi.";
       }
-    }
-    window.copyMessage = copyMessage;
-    window.handleForm = handleForm;
-
-    // Dropdowns (desktop + drawer)
-    document.querySelectorAll('.dropdown-toggle').forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const box = btn.closest('.nav-item.dropdown');
-        const isOpen = box.classList.toggle('open');
-        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      });
     });
+  }
+</script>
 
-    // close on outside click
-    document.addEventListener('click', () => {
-      document.querySelectorAll('.nav-item.dropdown').forEach((d) => {
-        d.classList.remove('open');
-        const b = d.querySelector('.dropdown-toggle');
-        if (b) b.setAttribute('aria-expanded', 'false');
-      });
-    });
-
-    // keep menu open when clicking inside dropdown
-    document.querySelectorAll('.dropdown-menu').forEach((m) => {
-      m.addEventListener('click', (e) => e.stopPropagation());
-    });
-  </script>
 </body>
 </html>
