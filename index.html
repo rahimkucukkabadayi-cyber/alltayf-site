@@ -72,17 +72,24 @@
       flex-wrap:wrap;
       justify-content:flex-end;
     }
-    .menu a{
+    .menu a, .menu .nav-link{
       padding:10px 10px;
       border-radius:12px;
       color:var(--muted);
       border:1px solid transparent;
+      background: transparent;
+      font: inherit;
+      cursor: pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
     }
-    .menu a:hover{
+    .menu a:hover, .menu .nav-link:hover{
       color:var(--text);
       border-color: var(--line);
       background: rgba(255,255,255,.03);
     }
+
     .cta{
       display:flex; gap:10px; align-items:center;
     }
@@ -102,6 +109,38 @@
     }
     .btn.primary:hover{
       background: linear-gradient(135deg, rgba(110,124,255,.35), rgba(80,227,194,.18));
+    }
+
+    /* DROPDOWN (Desktop) */
+    .nav-item.dropdown{ position:relative; display:inline-flex; align-items:center; }
+    .dropdown-toggle .chev{ font-size:12px; opacity:.85; }
+
+    .dropdown-menu{
+      display:none;
+      position:absolute;
+      top: calc(100% + 10px);
+      left:0;
+      min-width: 240px;
+      padding: 10px;
+      border-radius: 14px;
+      background: rgba(10,14,28,.92);
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      z-index: 9999;
+    }
+    .nav-item.dropdown.open > .dropdown-menu{ display:block; }
+
+    .dropdown-link{
+      display:block;
+      padding:10px 10px;
+      border-radius:12px;
+      color:var(--text);
+      border:1px solid transparent;
+    }
+    .dropdown-link:hover{
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.10);
     }
 
     /* HERO */
@@ -278,20 +317,50 @@
       .menu{ display:none; }
       .mobile-toggle{ display:inline-flex; }
     }
+
     .drawer{
       display:none;
       border-top:1px solid var(--line);
       padding: 10px 0 16px;
     }
-    .drawer a{
+    .drawer a, .drawer .nav-link{
       display:block;
+      width:100%;
+      text-align:left;
       padding:10px 12px;
       border-radius: 12px;
       color: var(--muted);
       border:1px solid transparent;
+      background: transparent;
+      font: inherit;
     }
-    .drawer a:hover{ color:var(--text); border-color:var(--line); background: rgba(255,255,255,.03); }
+    .drawer a:hover, .drawer .nav-link:hover{
+      color:var(--text);
+      border-color:var(--line);
+      background: rgba(255,255,255,.03);
+    }
     .drawer.open{ display:block; }
+
+    /* DROPDOWN (Drawer/Mobile): absolute değil, içeride aç */
+    .drawer .nav-item.dropdown{ display:block; }
+    .drawer .dropdown-menu{
+      position: static;
+      min-width: 0;
+      box-shadow: none;
+      background: transparent;
+      border: 0;
+      padding: 6px 0 6px 10px;
+    }
+    .drawer .dropdown-link{
+      border:1px solid transparent;
+      color: var(--muted);
+      padding: 10px 12px;
+    }
+    .drawer .dropdown-link:hover{
+      color: var(--text);
+      border-color: var(--line);
+      background: rgba(255,255,255,.03);
+    }
   </style>
 </head>
 
@@ -301,7 +370,6 @@
     <div class="container">
       <div class="nav-inner">
         <a class="brand" href="#top" aria-label="ALLTAYF ana sayfa">
-          <!-- Logo: aynı klasöre "logo.png" koy -->
           <img src="logo.png" alt="ALLTAYF Logo" onerror="this.style.display='none'">
           <div class="title">
             <b>ALLTAYF</b>
@@ -309,55 +377,61 @@
           </div>
         </a>
 
-  <nav class="menu" aria-label="Menü">
-  <a href="#vizyon">Vizyon</a>
-  <a href="#koy">Köy</a>
-  <a href="#tinyhouse">Tiny House</a>
+        <nav class="menu" aria-label="Menü">
+          <a href="#vizyon">Vizyon</a>
+          <a href="#koy">Köy</a>
+          <a href="#tinyhouse">Tiny House</a>
 
-  <div class="nav-item dropdown">
-    <button class="nav-link dropdown-toggle" type="button">
-      Tayflar <span class="chev">▾</span>
-    </button>
+          <div class="nav-item dropdown">
+            <button class="nav-link dropdown-toggle" type="button" aria-expanded="false">
+              Tayflar <span class="chev">▾</span>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-link" href="#farm">Alltayf Farm</a>
+              <a class="dropdown-link" href="#build">Alltayf Build</a>
+              <a class="dropdown-link" href="#energy">Alltayf Energy</a>
+              <a class="dropdown-link" href="#drill">Alltayf Drill</a>
+              <a class="dropdown-link" href="#stone">Alltayf Stone</a>
+              <a class="dropdown-link" href="#tech">Alltayf Tech</a>
+              <a class="dropdown-link" href="#stay">Alltayf Stay</a>
+              <a class="dropdown-link" href="#event">Alltayf Event</a>
+            </div>
+          </div>
 
-    <div class="dropdown-menu">
-      <a class="dropdown-link" href="#farm">Alltayf Farm</a>
-      <a class="dropdown-link" href="#build">Alltayf Build</a>
-      <a class="dropdown-link" href="#energy">Alltayf Energy</a>
-      <a class="dropdown-link" href="#drill">Alltayf Drill</a>
-      <a class="dropdown-link" href="#stone">Alltayf Stone</a>
-      <a class="dropdown-link" href="#tech">Alltayf Tech</a>
-      <a class="dropdown-link" href="#stay">Alltayf Stay</a>
-      <a class="dropdown-link" href="#event">Alltayf Event</a>
-    </div>
-  </div>
+          <a href="#faaliyet">Faaliyet Alanları</a>
+          <a href="#iletisim">İletişim</a>
+        </nav>
 
-  <a href="#faaliyet">Faaliyet Alanları</a>
-  <a href="#iletisim">İletişim</a>
-</nav>  
-<div class="cta">
+        <div class="cta">
           <button class="btn mobile-toggle" id="menuBtn" aria-label="Menüyü aç/kapat">Menü</button>
-          <!-- WhatsApp: numaranı yaz -->
           <a class="btn primary" href="https://wa.me/905431676888" target="_blank" rel="noopener">WhatsApp</a>
         </div>
       </div>
 
+      <!-- Mobile Drawer -->
       <div class="drawer" id="drawer">
-        <div class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button">
-    Tayflar <span class="chev">▾</span>
-  </button>
+        <a href="#vizyon">Vizyon</a>
+        <a href="#koy">Köy</a>
+        <a href="#tinyhouse">Tiny House</a>
 
-  <div class="dropdown-menu">
-    <a class="dropdown-link" href="#farm">Alltayf Farm</a>
-    <a class="dropdown-link" href="#build">Alltayf Build</a>
-    <a class="dropdown-link" href="#energy">Alltayf Energy</a>
-    <a class="dropdown-link" href="#drill">Alltayf Drill</a>
-    <a class="dropdown-link" href="#stone">Alltayf Stone</a>
-    <a class="dropdown-link" href="#tech">Alltayf Tech</a>
-    <a class="dropdown-link" href="#stay">Alltayf Stay</a>
-    <a class="dropdown-link" href="#event">Alltayf Event</a>
-    <a href="#faaliyet">Faaliyet Alanları</a>
-    <a href="#iletisim">İletişim</a>
+        <div class="nav-item dropdown">
+          <button class="nav-link dropdown-toggle" type="button" aria-expanded="false">
+            Tayflar <span class="chev">▾</span>
+          </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-link" href="#farm">Alltayf Farm</a>
+            <a class="dropdown-link" href="#build">Alltayf Build</a>
+            <a class="dropdown-link" href="#energy">Alltayf Energy</a>
+            <a class="dropdown-link" href="#drill">Alltayf Drill</a>
+            <a class="dropdown-link" href="#stone">Alltayf Stone</a>
+            <a class="dropdown-link" href="#tech">Alltayf Tech</a>
+            <a class="dropdown-link" href="#stay">Alltayf Stay</a>
+            <a class="dropdown-link" href="#event">Alltayf Event</a>
+          </div>
+        </div>
+
+        <a href="#faaliyet">Faaliyet Alanları</a>
+        <a href="#iletisim">İletişim</a>
       </div>
     </div>
   </header>
@@ -759,13 +833,17 @@
     // Mobile menu
     const menuBtn = document.getElementById('menuBtn');
     const drawer = document.getElementById('drawer');
-    if (menuBtn) {
+
+    if (menuBtn && drawer) {
       menuBtn.addEventListener('click', () => drawer.classList.toggle('open'));
-      drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => drawer.classList.remove('open')));
+      drawer.querySelectorAll('a').forEach(a =>
+        a.addEventListener('click', () => drawer.classList.remove('open'))
+      );
     }
 
     // Year
-    document.getElementById('year').textContent = new Date().getFullYear();
+    const yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
 
     // Filters
     const chips = [...document.querySelectorAll('.chip')];
@@ -809,20 +887,31 @@
     }
     window.copyMessage = copyMessage;
     window.handleForm = handleForm;
-  </script>
-<script>
-  document.querySelectorAll('.dropdown-toggle').forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const box = btn.closest('.nav-item.dropdown');
-      box.classList.toggle('open');
-    });
-  });
 
-  document.addEventListener('click', () => {
-    document.querySelectorAll('.nav-item.dropdown').forEach((d) => d.classList.remove('open'));
-  });
-</script>
+    // Dropdowns (desktop + drawer)
+    document.querySelectorAll('.dropdown-toggle').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const box = btn.closest('.nav-item.dropdown');
+        const isOpen = box.classList.toggle('open');
+        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+    });
+
+    // close on outside click
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.nav-item.dropdown').forEach((d) => {
+        d.classList.remove('open');
+        const b = d.querySelector('.dropdown-toggle');
+        if (b) b.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // keep menu open when clicking inside dropdown
+    document.querySelectorAll('.dropdown-menu').forEach((m) => {
+      m.addEventListener('click', (e) => e.stopPropagation());
+    });
+  </script>
 </body>
 </html>
