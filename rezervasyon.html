@@ -4,12 +4,53 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Rezervasyon | ALLTAYF</title>
+  <style>
+    :root{--bg:#0b0f1a;--text:#e8ecff;--muted:#b8c0ff;--line:rgba(255,255,255,.12);--radius:16px;}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background:
+        radial-gradient(900px 500px at 20% 10%, rgba(110,124,255,.25), transparent 60%),
+        radial-gradient(900px 500px at 80% 20%, rgba(80,227,194,.18), transparent 60%),
+        var(--bg);
+      color:var(--text);
+    }
+    .wrap{width:min(900px, calc(100% - 40px)); margin:40px auto;}
+    .card{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--radius);
+      padding:22px;
+    }
+    h1{margin:0 0 8px;}
+    p{color:var(--muted); margin:8px 0 0;}
+    .btn{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 14px; border-radius:14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color:var(--text); text-decoration:none;
+      margin-top:14px;
+    }
+    .btn.primary{
+      border-color: rgba(110,124,255,.55);
+      background: linear-gradient(135deg, rgba(110,124,255,.25), rgba(80,227,194,.12));
+    }
+    .row{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;}
+    small{color:var(--muted);}
+  </style>
 </head>
-<body style="font-family:Arial; padding:20px;">
-  <h1>Tiny House Rezervasyon</h1>
-  <p>Rezervasyon için WhatsApp’tan yaz.</p>
-
-  <a href="https://wa.me/905431676888" target="_blank">WhatsApp</a>
-  <p><a href="index.html">← Ana sayfaya dön</a></p>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Tiny House Rezervasyon</h1>
+      <p>Rezervasyon talebi için WhatsApp’tan yazabilirsin.</p>
+      <div class="row">
+        <a class="btn primary" href="https://wa.me/905431676888" target="_blank" rel="noopener">WhatsApp’tan Yaz</a>
+        <a class="btn" href="index.html">← Ana sayfaya dön</a>
+      </div>
+      <p style="margin-top:14px;"><small>Kapasite: 2 kişi • Giriş: 14:00 • Çıkış: 11:00</small></p>
+    </div>
+  </div>
 </body>
 </html>
