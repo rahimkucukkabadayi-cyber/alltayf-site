@@ -3,54 +3,288 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Rezervasyon | ALLTAYF</title>
+  <title>ALLTAYF Stay – Rezervasyon</title>
+
   <style>
-    :root{--bg:#0b0f1a;--text:#e8ecff;--muted:#b8c0ff;--line:rgba(255,255,255,.12);--radius:16px;}
+    :root{
+      --bg:#0b0f1a;
+      --card:#0f1630;
+      --text:#e8ecff;
+      --muted:#b8c0ff;
+      --line:rgba(255,255,255,.10);
+      --brand:#6e7cff;
+      --shadow: 0 20px 60px rgba(0,0,0,.45);
+      --radius: 16px;
+    }
+    *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      font-family: ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;
       background:
         radial-gradient(900px 500px at 20% 10%, rgba(110,124,255,.25), transparent 60%),
         radial-gradient(900px 500px at 80% 20%, rgba(80,227,194,.18), transparent 60%),
         var(--bg);
       color:var(--text);
     }
-    .wrap{width:min(900px, calc(100% - 40px)); margin:40px auto;}
-    .card{
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      border-radius: var(--radius);
-      padding:22px;
-    }
-    h1{margin:0 0 8px;}
-    p{color:var(--muted); margin:8px 0 0;}
+    .container{ width:min(1120px, calc(100% - 40px)); margin:0 auto; padding:28px 0 50px; }
+    .topbar{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .title h1{ margin:0; font-size:28px; }
+    .title p{ margin:6px 0 0; color:var(--muted); }
+
+    a{ color:inherit; text-decoration:none; }
     .btn{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:10px 14px; border-radius:14px;
       border:1px solid var(--line);
       background: rgba(255,255,255,.03);
-      color:var(--text); text-decoration:none;
-      margin-top:14px;
+      color:var(--text);
+      padding:10px 14px;
+      border-radius:14px;
+      display:inline-flex; align-items:center; gap:10px;
+      cursor:pointer;
     }
     .btn.primary{
       border-color: rgba(110,124,255,.55);
       background: linear-gradient(135deg, rgba(110,124,255,.25), rgba(80,227,194,.12));
     }
-    .row{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;}
-    small{color:var(--muted);}
+
+    .table{
+      margin-top:18px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .thead, .row{
+      display:grid;
+      grid-template-columns: 160px 160px 160px 120px 1fr 160px;
+      gap:12px;
+      align-items:center;
+      padding:12px 14px;
+    }
+    .thead{
+      color:var(--muted);
+      font-size:13px;
+      border-bottom:1px solid var(--line);
+      background: rgba(255,255,255,.02);
+    }
+    .row{ border-top:1px solid var(--line); }
+    .planet{ font-weight:800; font-size:18px; letter-spacing:.2px; }
+    .field label{ display:block; font-size:12px; color:var(--muted); margin-bottom:6px; }
+    input, select{
+      width:100%;
+      height:40px;
+      padding:0 10px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.25);
+      color:var(--text);
+      outline:none;
+    }
+    .priceBox{ text-align:right; }
+    .priceBox .small{ color:var(--muted); font-size:12px; }
+    .priceBox .big{ font-weight:900; font-size:16px; margin-top:4px; }
+
+    /* Modal */
+    .modalBack{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.55);
+      display:none; align-items:center; justify-content:center;
+      padding:18px;
+    }
+    .modal{
+      width:min(560px, 100%);
+      border:1px solid var(--line);
+      background: rgba(15,22,48,.92);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding:16px;
+    }
+    .modal h3{ margin:6px 0 10px; }
+    .modal p{ margin:6px 0; color:var(--muted); }
+    .modal .actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; justify-content:flex-end; }
+
+    @media (max-width: 980px){
+      .thead{ display:none; }
+      .row{
+        grid-template-columns: 1fr;
+      }
+      .priceBox{ text-align:left; }
+    }
   </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="card">
-      <h1>Tiny House Rezervasyon</h1>
-      <p>Rezervasyon talebi için WhatsApp’tan yazabilirsin.</p>
-      <div class="row">
-        <a class="btn primary" href="https://wa.me/905431676888" target="_blank" rel="noopener">WhatsApp’tan Yaz</a>
-        <a class="btn" href="index.html">← Ana sayfaya dön</a>
+  <div class="container">
+    <div class="topbar">
+      <div class="title">
+        <h1>Rezervasyon</h1>
+        <p>Güneş • 9 Gezegen • Ay — demo rezervasyon akışı</p>
       </div>
-      <p style="margin-top:14px;"><small>Kapasite: 2 kişi • Giriş: 14:00 • Çıkış: 11:00</small></p>
+      <a class="btn" href="index.html">← Ana Sayfa</a>
+    </div>
+
+    <div class="table">
+      <div class="thead">
+        <div></div>
+        <div>Giriş</div>
+        <div>Çıkış</div>
+        <div>Kişi</div>
+        <div>Toplam</div>
+        <div></div>
+      </div>
+
+      <div id="rows"></div>
     </div>
   </div>
+
+  <div class="modalBack" id="modalBack">
+    <div class="modal">
+      <h3 id="mTitle">Ödeme</h3>
+      <p id="mDesc"></p>
+      <p><b>Demo:</b> Bu ekranda gerçek ödeme yok. Onaylayınca “Başarılı” gösterecek.</p>
+      <div class="actions">
+        <button class="btn" id="mClose">Vazgeç</button>
+        <button class="btn primary" id="mPay">Demo Ödeme Onayla</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Güneş + 9 gezegen (Plüton dahil) + Ay
+    const UNITS = ["Güneş","Merkür","Venüs","Dünya","Mars","Jüpiter","Satürn","Uranüs","Neptün","Plüton","Ay"];
+    const PRICE_PER_NIGHT = 3000; // demo gecelik fiyat
+
+    const rows = document.getElementById("rows");
+
+    const modalBack = document.getElementById("modalBack");
+    const mTitle = document.getElementById("mTitle");
+    const mDesc  = document.getElementById("mDesc");
+    const mClose = document.getElementById("mClose");
+    const mPay   = document.getElementById("mPay");
+
+    let pending = null;
+
+    function nightsBetween(a,b){
+      if(!a || !b) return 0;
+      const d1 = new Date(a+"T00:00:00");
+      const d2 = new Date(b+"T00:00:00");
+      const diff = (d2 - d1) / (1000*60*60*24);
+      return Number.isFinite(diff) ? Math.max(0, Math.floor(diff)) : 0;
+    }
+
+    function fmtTRY(n){
+      return new Intl.NumberFormat("tr-TR").format(n) + " ₺";
+    }
+
+    function recalc(row){
+      const inEl = row.querySelector(".in");
+      const outEl = row.querySelector(".out");
+      const guestsEl = row.querySelector(".guests");
+      const totalEl = row.querySelector(".total");
+      const btn = row.querySelector(".payBtn");
+
+      if(inEl.value) outEl.min = inEl.value;
+
+      const nights = nightsBetween(inEl.value, outEl.value);
+      const guests = Number(guestsEl.value || 1);
+
+      // Demo hesap: kişi sayısı toplamı değiştirmesin istersen kaldırırız.
+      const total = nights * PRICE_PER_NIGHT;
+
+      if(nights > 0){
+        totalEl.innerHTML = `<div class="small">${nights} gece • kişi ${guests}</div><div class="big">${fmtTRY(total)}</div>`;
+        btn.disabled = false;
+      }else{
+        totalEl.innerHTML = `<div class="small">Gecelik</div><div class="big">${fmtTRY(PRICE_PER_NIGHT)}</div>`;
+        btn.disabled = true;
+      }
+    }
+
+    function openModal(data){
+      pending = data;
+      mTitle.textContent = `${data.unit} – Ödeme`;
+      mDesc.textContent  = `Giriş: ${data.inDate} | Çıkış: ${data.outDate} | Kişi: ${data.guests} | Toplam: ${fmtTRY(data.total)}`;
+      modalBack.style.display = "flex";
+    }
+
+    function closeModal(){
+      pending = null;
+      modalBack.style.display = "none";
+    }
+
+    mClose.addEventListener("click", closeModal);
+    modalBack.addEventListener("click", (e)=>{ if(e.target === modalBack) closeModal(); });
+
+    mPay.addEventListener("click", ()=>{
+      if(!pending) return;
+      alert("✅ Demo ödeme başarılı!\nRezervasyon kaydedildi (demo).");
+      closeModal();
+    });
+
+    function makeRow(unit){
+      const row = document.createElement("div");
+      row.className = "row";
+      row.innerHTML = `
+        <div class="planet">${unit}</div>
+
+        <div class="field">
+          <label>Giriş</label>
+          <input class="in" type="date" />
+        </div>
+
+        <div class="field">
+          <label>Çıkış</label>
+          <input class="out" type="date" />
+        </div>
+
+        <div class="field">
+          <label>Kişi</label>
+          <select class="guests">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4" selected>4</option>
+          </select>
+        </div>
+
+        <div class="priceBox total"></div>
+
+        <div>
+          <button class="btn primary payBtn" disabled>Ödeme Yap</button>
+        </div>
+      `;
+
+      const inEl = row.querySelector(".in");
+      const outEl = row.querySelector(".out");
+      const guestsEl = row.querySelector(".guests");
+      const btn = row.querySelector(".payBtn");
+
+      ["input","change"].forEach(evt=>{
+        inEl.addEventListener(evt, ()=>recalc(row));
+        outEl.addEventListener(evt, ()=>recalc(row));
+        guestsEl.addEventListener(evt, ()=>recalc(row));
+      });
+
+      btn.addEventListener("click", ()=>{
+        const nights = nightsBetween(inEl.value, outEl.value);
+        if(nights <= 0) return;
+
+        const total = nights * PRICE_PER_NIGHT;
+
+        openModal({
+          unit,
+          inDate: inEl.value,
+          outDate: outEl.value,
+          guests: guestsEl.value,
+          total
+        });
+      });
+
+      recalc(row);
+      return row;
+    }
+
+    UNITS.forEach(u=> rows.appendChild(makeRow(u)));
+  </script>
 </body>
 </html>
